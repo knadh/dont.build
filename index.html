@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <title>Build or don't build this feature?</title>
+    <meta name="description" content="A simple, opinionated decision system to help decide whether to build a software feature or not." />
+    <link rel="shortcut icon" href="https://dont.build/favicon.png" />
+    <meta property="og:image" content="https://dont.build/thumb.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="style.css?v=2" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="container">
+    <section class="box">
+        <p class="help">1: Low, 10: High</p>
+        <h1 class="title">Build or don't build this feature?</h1>
+        <p>A simple, opinionated tool for helping decide whether a software feature is worth building.</p>
+        <br />
+        <form class="form">
+            <fieldset class="p-users">
+                <span class="value"></span>
+                <label>What % of users are likely to use this feature?</label>
+                <input type="range" min="1" max="10" step="0.5" value="5.5" />
+            </fieldset> 
+            <fieldset class="p-effort">
+                <span class="value"></span>
+                <label>What is the time, technical effort, and cost to build this feature?</label>
+                <input type="range" min="1" max="10" step="0.5" value="5.5" />
+            </fieldset>
+            <fieldset class="p-user-value">
+                <span class="value"></span>
+                <label>How important are the target users to the existing product?</label>
+                <input type="range" min="1" max="10" step="0.5" value="5.5" />
+            </fieldset>
+            <fieldset class="p-operational-complexity">
+                <span class="value"></span>
+                <label>What is the operational / business complexity of this feature?</label>
+                <input type="range" min="1" max="10" step="0.5" value="5.5" />
+            </fieldset>
+            <fieldset class="p-feature-value">
+                <span class="value"></span>
+                <label>How valuable is this feature to the target users, truly?</label>
+                <input type="range" min="1" max="10" step="0.5" value="5.5" />
+            </fieldset>
+            <fieldset class="p-negative-impact">
+                <span class="value"></span>
+                <label>Does building it have a negative impact on the rest of the product?</label>
+                <input type="range" min="1" max="10" step="0.5" value="5.5" />
+            </fieldset>
+        </form>
+        <h1 class="answer">
+            <span><span class="bool"></span> (<span class="percent"></span>)</span>
+        </h1>    
+    </section>
+
+    <noscript><h1>This page requires Javascript to function.</h1></noscript>
+
+    <section>
+        <p>
+            Technical decisions are often about being as less-wrong as possible than being right.
+            Decision parameters themselves are dependent on even more parameters, such as the business environment, expertise, team and user culture,
+            cost ... There is no one-size-fits all framework for making technical decisions, especially when it comes
+            to adding a new feature to a product as they often (rightly) tend to be subjective bets than scientific conclusions.
+        </p>
+        <p>
+            This is one opinionated decision making system (a highly simplified version of it) that tries to bring in
+            elements of objectivity to making feature decisions in software products. This system has worked pretty well for me personally
+            and at work, <a href="https://zerodha.com">Zerodha</a>. So, it might work for others too. View this page's source for the logic and rationale. 
+            Context:
+            <a href="https://zerodha.tech/blog/hello-world/">[1]</a>
+            <a href="https://zerodha.tech/blog/scaling-with-common-sense/">[2]</a>
+            <a href="https://zerodha.tech/blog/being-future-ready-with-common-sense/">[3]</a>
+            <a href="https://nadh.in/blog/fomo-yamo/">[4]</a>
+        </p>
+    </section>
+    
+    <footer><a href="https://nadh.in">Kailash Nadh</a> &mdash; 2022</footer>
+</div>
+
+
+<script>
+(function() {
+    const params = [
+        { weight: 0.10, value: 5.5, negative: false, name: 'p-users', },
+        { weight: 0.20, value: 5.5, negative: false, name: 'p-user-value',},
+        { weight: 0.20, value: 5.5, negative: false, name: 'p-feature-value',},
+        { weight: 0.15, value: 5.5, negative: true,  name: 'p-effort', },
+        { weight: 0.20, value: 5.5, negative: true,  name: 'p-negative-impact',},
+        { weight: 0.15, value: 5.5, negative: true,  name: 'p-operational-complexity',},
+    ]
+
+    params.forEach((p, n) => {
+        let net = 0;
+        const inp = document.querySelector(`.${p.name} input`);
+
+        inp.value = p.value;
+        inp.oninput = (e) => {
+            const val = parseFloat(e.target.value, 64);
+            document.querySelector(`.${p.name} .value`).innerText = val;
+            p.value = val;
+
+            // Sum all weighted params.
+            const sum = params.reduce((prev, pm) => {
+                let v = pm.value;
+                if (pm.negative) {
+                    v = 10 - v;
+                }
+
+                return prev + (v / 10 * pm.weight);
+            }, 0);
+
+            // Display the results.
+            document.querySelector(".answer .percent").innerText = `${(sum * 100).toFixed(0)}%`;
+
+            let b = '50-50. Go with the gut.';
+            if (sum < 0.5 && sum > 0.48) {
+                b = `No, but a close call.`;
+            } else if (sum < 0.48) {
+                b = `No.`;
+            } else if (sum > 0.5 && sum < 0.53) {
+                b = `Yes, but a close call.`;
+            } else {
+                b = 'Yes.';
+            }
+            document.querySelector(".answer .bool").innerText = b;
+        };
+
+        inp.dispatchEvent(new Event('input'));
+    });
+})();
+</script>
+
+</body>
+</html>
