@@ -157,3 +157,10 @@ footer {
     max-width: 90%;
   }
 }
+
+
+@media (max-width: 400px) {
+  .form label {
+    max-width: 70%;
+  }
+}
