@@ -113,15 +113,15 @@
             // Display the results.
             document.querySelector(".answer .percent").innerText = `${(sum * 100).toFixed(0)}%`;
 
-            let b = '50-50. Go with the gut.';
+            let b = 'Yes';
             if (sum < 0.5 && sum > 0.48) {
                 b = `No, but a close call.`;
             } else if (sum < 0.48) {
                 b = `No.`;
             } else if (sum > 0.5 && sum < 0.53) {
                 b = `Yes, but a close call.`;
-            } else {
-                b = 'Yes.';
+            } else if(sum === 0.5) {
+                b = '50-50. Go with the gut.';
             }
             document.querySelector(".answer .bool").innerText = b;
         };
