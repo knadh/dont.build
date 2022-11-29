@@ -134,16 +134,16 @@
 })();
 
 (function () {
-  var answerToggle = document.querySelector('#answer-visibility-toggle');
-  var answerElement = document.querySelector('.answer');
-  var hideClass = 'hide';
+  const answerToggle = document.querySelector('#answer-visibility-toggle');
+  const answerElement = document.querySelector('.answer');
+  const hideClass = 'hide';
 
-  function refreshButton () {
-    var hidden = answerElement.classList.contains(hideClass);
+  const refreshButton = () => {
+    const hidden = answerElement.classList.contains(hideClass);
     answerToggle.innerText = hidden ? 'Show Answer' : 'Hide Answer';
   }
 
-  function toggleAnswer() {
+  const toggleAnswer = () => {
     answerElement.classList.toggle(hideClass);
   }
 
