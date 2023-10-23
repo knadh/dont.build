@@ -34,7 +34,7 @@ p {
 }
 
 .hide {
-  visibility: hidden;
+  display: none;
 }
 
 fieldset {
@@ -135,6 +135,8 @@ button {
 
 .answer {
   text-align: center;
+}
+.answer h1 {
   margin: 30px 0;
   font-size: 3rem;
   line-height: 3rem;
@@ -142,6 +144,12 @@ button {
   .answer span {
     display: inline-block;
     background: var(--primary);
+  }
+  .answer .summary {
+    font-family: monospace;
+    width: 100%;
+    padding: 10px;
+    min-height: 200px;
   }
 
 footer {

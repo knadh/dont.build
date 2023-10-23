@@ -52,9 +52,10 @@
         <div class="text-center">
           <button id="answer-visibility-toggle">Show Answer</button>
         </div>
-        <h1 class="answer hide">
-            <span><span class="bool"></span> (<span class="percent"></span>)</span>
-        </h1>
+        <div class="answer hide">
+            <h1><span><span class="bool"></span> (<span class="percent"></span>)</span></h1>
+            <textarea class="summary" readonly></textarea>
+        </div>
     </section>
 
     <noscript><h1>This page requires Javascript to function.</h1></noscript>
@@ -126,7 +127,15 @@
             } else if(sum === 0.5) {
                 b = '50-50. Go with the gut.';
             }
+
             document.querySelector(".answer .bool").innerText = b;
+
+            // Print the summary in the textbox.
+            let summary = '';
+            document.querySelectorAll(".form fieldset").forEach((f, n) => {
+                summary += `${n + 1}. ${f.querySelector("label").innerText} = ${f.querySelector("input").value}\n`;
+            });
+            document.querySelector('.summary').value = `${summary}\n=> ${b}`;
         };
 
         inp.dispatchEvent(new Event('input'));
