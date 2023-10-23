@@ -50,7 +50,7 @@
             </fieldset>
         </form>
         <div class="text-center">
-          <button id="answer-visibility-toggle">Show Answer</button>
+          <button id="btn-toggle-answer">Show answer</button>
         </div>
         <div class="answer hide">
             <h1><span><span class="bool"></span> (<span class="percent"></span>)</span></h1>
@@ -143,25 +143,18 @@
 })();
 
 (function () {
-  const answerToggle = document.querySelector('#answer-visibility-toggle');
-  const answerElement = document.querySelector('.answer');
-  const hideClass = 'hide';
+    const ans = document.querySelector('.answer');
+    const btn = document.querySelector('#btn-toggle-answer');
 
-  const refreshButton = () => {
-    const hidden = answerElement.classList.contains(hideClass);
-    answerToggle.innerText = hidden ? 'Show Answer' : 'Hide Answer';
-  }
-
-  const toggleAnswer = () => {
-    answerElement.classList.toggle(hideClass);
-  }
-
-  refreshButton();
-
-  answerToggle.addEventListener('click', function() {
-    toggleAnswer();
-    refreshButton();
-  });
+    btn.addEventListener('click', function() {
+        if(ans.style.display === 'block') {
+            ans.style.display = 'none';
+            btn.innerText = "Show answer";
+        } else {
+            ans.style.display = 'block';
+            btn.innerText = "Hide answer";
+        }
+    });
 })();
 
 </script>

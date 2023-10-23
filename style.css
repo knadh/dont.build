@@ -33,10 +33,6 @@ p {
   color: #666;
 }
 
-.hide {
-  display: none;
-}
-
 fieldset {
   padding: 0;
   margin: 0;
@@ -135,6 +131,7 @@ button {
 
 .answer {
   text-align: center;
+  display: none;
 }
 .answer h1 {
   margin: 30px 0;
