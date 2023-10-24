@@ -177,6 +177,14 @@
         tempTxt.select();
         document.execCommand("copy");
         document.body.removeChild(tempTxt);
+
+        let notice = document.createElement("span");
+        notice.className = "notice visible";
+        notice.innerHTML = "Copied to clipboard.";
+        document.body.appendChild(notice);
+        setTimeout(() => {
+            document.body.removeChild(notice);
+        }, 3000);
     }
 
     copyBtn.addEventListener('click', function() {
