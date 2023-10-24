@@ -115,7 +115,7 @@
             }, 0);
 
             // Display the results.
-            document.querySelector(".answer .percent").innerText = `${(sum * 100).toFixed(0)}%`;
+            const percent = `${(sum * 100).toFixed(0)}%`
 
             let b = 'Yes';
             if (sum < 0.5 && sum > 0.46) {
@@ -128,6 +128,7 @@
                 b = '50-50. Go with the gut.';
             }
 
+            document.querySelector(".answer .percent").innerText = percent;
             document.querySelector(".answer .bool").innerText = b;
 
             // Print the summary in the textbox.
@@ -135,7 +136,7 @@
             document.querySelectorAll(".form fieldset").forEach((f, n) => {
                 summary += `${n + 1}. ${f.querySelector("label").innerText} = ${f.querySelector("input").value}\n`;
             });
-            document.querySelector('.summary').value = `${summary}\n=> ${b}`;
+            document.querySelector('.summary').value = `${summary}\n=> ${b} (${percent})`;
         };
 
         inp.dispatchEvent(new Event('input'));
