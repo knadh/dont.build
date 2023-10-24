@@ -55,6 +55,9 @@
         <div class="answer hide">
             <h1><span><span class="bool"></span> (<span class="percent"></span>)</span></h1>
             <textarea class="summary" readonly></textarea>
+            <textarea hidden class="md-summary" readonly></textarea>
+            <button class="copy">Copy</button>
+            <button class="copy-md">Copy as Markdown</button>
         </div>
     </section>
 
@@ -133,10 +136,15 @@
 
             // Print the summary in the textbox.
             let summary = '';
+            let mdSummary = '||Question|Answer|\n|---|---|---|\n';
             document.querySelectorAll(".form fieldset").forEach((f, n) => {
                 summary += `${n + 1}. ${f.querySelector("label").innerText} = ${f.querySelector("input").value}\n`;
+                mdSummary += `|${n + 1}|${f.querySelector("label").innerText}|${f.querySelector("input").value}|\n`;
             });
-            document.querySelector('.summary').value = `${summary}\n=> ${b} (${percent})`;
+            summary += `\n=> ${b} (${percent})`;
+            mdSummary += `||Result:|${b} (${percent})|`;
+            document.querySelector('.summary').value = summary;
+            document.querySelector('.md-summary').value = mdSummary;
         };
 
         inp.dispatchEvent(new Event('input'));
@@ -155,6 +163,36 @@
             ans.style.display = 'block';
             btn.innerText = "Hide answer";
         }
+    });
+})();
+
+(function () {
+    const copyBtn = document.querySelector('.copy');
+    const copyMdBtn = document.querySelector('.copy-md');
+
+    var copyToClipboard = function(val) {
+        var tempTxt=document.createElement("textarea");
+        tempTxt.value=val;
+        document.body.appendChild(tempTxt);
+        tempTxt.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempTxt);
+
+        let notice = document.createElement("span");
+        notice.className = "notice visible";
+        notice.innerHTML = "Copied to clipboard.";
+        document.body.appendChild(notice);
+        setTimeout(() => {
+            document.body.removeChild(notice);
+        }, 3000);
+    }
+
+    copyBtn.addEventListener('click', function() {
+        copyToClipboard(document.querySelector('.summary').value);
+    });
+
+    copyMdBtn.addEventListener('click', function() {
+        copyToClipboard(document.querySelector('.md-summary').value);
     });
 })();
 

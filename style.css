@@ -181,3 +181,68 @@ footer {
     max-width: 70%;
   }
 }
+
+.notice {
+  position: fixed;
+  top: 30px;
+  left: 0;
+  right: 0;
+  width: 250px;
+  margin: auto;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  background: var(--primary);
+  z-index: 100;
+  visibility: hidden;
+  border-radius: 3px;
+  border: 2px solid var(--secondary);
+  box-shadow: 3px 3px 0px var(--secondary);   
+}
+
+.notice.visible {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 30px;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
